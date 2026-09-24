@@ -1,0 +1,85 @@
+{
+  "app-id": "app.emulsion.Emulsion",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "25.08",
+  "sdk": "org.freedesktop.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.rust-stable"
+  ],
+  "command": "emulsion",
+  "finish-args": [
+    "--require-version=1.16.0",
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--socket=wayland",
+    "--device=dri",
+    "--filesystem=xdg-pictures",
+    "--filesystem=xdg-documents",
+    "--filesystem=xdg-download",
+    "--share=network",
+    "--device=input",
+    "--talk-name=org.freedesktop.Flatpak"
+  ],
+  "build-options": {
+    "append-path": "/usr/lib/sdk/rust-stable/bin",
+    "env": {
+      "CARGO_HOME": "/run/build/emulsion/cargo",
+      "CARGO_NET_OFFLINE": "true",
+      "CARGO_INCREMENTAL": "0",
+      "CARGO_BUILD_JOBS": "2",
+      "ORT_SKIP_DOWNLOAD": "1",
+      "ORT_LIB_PATH": "/run/build/emulsion/onnxruntime"
+    }
+  },
+  "modules": [
+    {
+      "name": "emulsion",
+      "buildsystem": "simple",
+      "build-commands": [
+        "test \"$(uname -m)\" = x86_64",
+        "mkdir -p onnxruntime",
+        "xz --format=raw --lzma2=dict=64MiB -dc onnxruntime.tar.lzma2 | tar -xf - -C onnxruntime",
+        "cargo build --release --frozen --offline -p emulsion-app",
+        "install -Dm755 target/release/emulsion /app/bin/emulsion",
+        "bash scripts/stage-licenses.sh /app/share/licenses/emulsion",
+        "install -Dm644 packaging/linux/app.emulsion.Emulsion.desktop /app/share/applications/app.emulsion.Emulsion.desktop",
+        "desktop-file-edit --set-icon=app.emulsion.Emulsion /app/share/applications/app.emulsion.Emulsion.desktop",
+        "install -Dm644 omapak.metainfo.xml /app/share/metainfo/app.emulsion.Emulsion.metainfo.xml",
+        "install -Dm644 assets/icons/emulsion.png /app/share/icons/hicolor/512x512/apps/app.emulsion.Emulsion.png",
+        "install -Dm644 onnxruntime-LICENSE /app/share/licenses/emulsion/onnxruntime/LICENSE",
+        "install -Dm644 onnxruntime-ThirdPartyNotices.txt /app/share/licenses/emulsion/onnxruntime/ThirdPartyNotices.txt"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/jeremielumandong/emulsion.git",
+          "commit": "d35ed03c01c497a00c770b1a82e43c1fd3e0a7a6"
+        },
+        "cargo-sources.json",
+        {
+          "type": "file",
+          "url": "https://cdn.pyke.io/0/pyke:ort-rs/ms@1.28.0/x86_64-unknown-linux-gnu.tar.lzma2",
+          "sha256": "e454f710f8a49f53aa5b4ff51e3454ae1835777e431c6c35c5255ce6f205fd68",
+          "dest-filename": "onnxruntime.tar.lzma2"
+        },
+        {
+          "type": "file",
+          "path": "app.emulsion.Emulsion.metainfo.xml",
+          "dest-filename": "omapak.metainfo.xml"
+        },
+        {
+          "type": "file",
+          "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/v1.28.0/LICENSE",
+          "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+          "dest-filename": "onnxruntime-LICENSE"
+        },
+        {
+          "type": "file",
+          "url": "https://raw.githubusercontent.com/microsoft/onnxruntime/v1.28.0/ThirdPartyNotices.txt",
+          "sha256": "0e07b95f3a8d6230037707c5c4a2b554d12c4cb67369669ac255635528ffcee2",
+          "dest-filename": "onnxruntime-ThirdPartyNotices.txt"
+        }
+      ]
+    }
+  ]
+}

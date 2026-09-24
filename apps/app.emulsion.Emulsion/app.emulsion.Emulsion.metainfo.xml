@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>app.emulsion.Emulsion</id>
+  <name>Emulsion</name>
+  <summary>Edit photos and paint with layers and branchable history</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <developer id="io.github.jeremielumandong">
+    <name>Emulsion contributors</name>
+  </developer>
+  <url type="homepage">https://emulsion.pro</url>
+  <url type="bugtracker">https://github.com/jeremielumandong/emulsion/issues</url>
+  <url type="vcs-browser">https://github.com/jeremielumandong/emulsion</url>
+  <description>
+    <p>
+      Emulsion edits photographs and paintings with layers, masks, adjustment
+      nodes and a history you can branch. Brushes behave like their medium,
+      recipes recreate film and camera looks, and camera RAW and Photoshop
+      files open directly. Every AI feature is optional: local models for
+      selection, matting, fill, depth, upscaling and face restoration, an
+      image server of your own for generative fill, and a coding assistant
+      that drives the same commands you do.
+    </p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Photo editing with recipe previews and layers</caption>
+      <image>https://raw.githubusercontent.com/jeremielumandong/emulsion/d35ed03c01c497a00c770b1a82e43c1fd3e0a7a6/docs/images/editor-recipes.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Recent projects and recovered work in the home library</caption>
+      <image>https://raw.githubusercontent.com/jeremielumandong/emulsion/d35ed03c01c497a00c770b1a82e43c1fd3e0a7a6/docs/images/home-library.png</image>
+    </screenshot>
+  </screenshots>
+  <launchable type="desktop-id">app.emulsion.Emulsion.desktop</launchable>
+  <provides>
+    <binary>emulsion</binary>
+  </provides>
+  <categories>
+    <category>Graphics</category>
+    <category>RasterGraphics</category>
+    <category>Photography</category>
+  </categories>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="0.0.1" date="2026-09-19" />
+  </releases>
+</component>
