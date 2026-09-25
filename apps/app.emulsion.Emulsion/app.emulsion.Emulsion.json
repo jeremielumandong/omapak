@@ -53,7 +53,7 @@
         {
           "type": "git",
           "url": "https://github.com/jeremielumandong/emulsion.git",
-          "commit": "d35ed03c01c497a00c770b1a82e43c1fd3e0a7a6"
+          "commit": "016883e0a42b29116b9a9d18d2100ec3b8ff4020"
         },
         "cargo-sources.json",
         {
